@@ -47,52 +47,42 @@ public class Board {
         }
     }
 
-//    //Better. Finds bombs and increments all squares around it. Still ugly.
-//    public void assignNums() {
-//        for (int x = 0; x < boardWidth; x++) {
-//            for (int y = 0; y < boardHeight; y++) {
-//                if (board.get(x).get(y) == -1) {
-//                    if (x - 1 >= 0 && y - 1 >= 0 && board.get(x - 1).get(y - 1) != -1) {
-//                        board.get(x - 1).set(y - 1, board.get(x - 1).get(y - 1) + 1);
-//                    }// increment -1, -1
-//
-//                    if (x - 1 >= 0 && board.get(x - 1).get(y) != -1) {
-//                        board.get(x - 1).set(y, board.get(x - 1).get(y) + 1);
-//                    }// increment -1, 0
-//
-//                    if (x - 1 >= 0 && y + 1 < boardHeight && board.get(x - 1).get(y + 1) != -1) {
-//                        board.get(x - 1).set(y + 1, board.get(x - 1).get(y + 1) + 1);
-//                    }// increment -1, +1
-//
-//                    if (y - 1 >= 0 && board.get(x).get(y - 1) != -1) {
-//                        board.get(x).set(y - 1, board.get(x).get(y - 1) + 1);
-//                    }// increment 0, -1
-//
-//                    if (y + 1 < boardHeight && board.get(x).get(y + 1) != -1) {
-//                        board.get(x).set(y + 1, board.get(x).get(y + 1) + 1);
-//                    }// increment 0, +1
-//
-//                    if (x + 1 < boardWidth && y - 1 >= 0 && board.get(x + 1).get(y - 1) != -1) {
-//                        board.get(x + 1).set(y - 1, board.get(x + 1).get(y - 1) + 1);
-//                    }//increment +1, -1
-//
-//                    if (x + 1 < boardWidth && board.get(x + 1).get(y) != -1) {
-//                        board.get(x + 1).set(y, board.get(x + 1).get(y) + 1);
-//                    }//increment +1, 0
-//
-//                    if (x + 1 < boardWidth && y + 1 < boardHeight && board.get(x + 1).get(y + 1) != -1) {
-//                        board.get(x + 1).set(y + 1, board.get(x + 1).get(y + 1) + 1);
-//                    }//increment +1, +1
-//                }
-//            }
-//        }
-//    }
+    //Better. Finds bombs and increments all squares around it. Still ugly.
+    public void assignNums() {
+        for (int x = 0; x < boardWidth; x++) {
+            for (int y = 0; y < boardHeight; y++) {
+                if (board.get(x).get(y) == -1) {
+                    if (x - 1 >= 0 && y - 1 >= 0 && board.get(x - 1).get(y - 1) != -1) {
+                        board.get(x - 1).set(y - 1, board.get(x - 1).get(y - 1) + 1);
+                    }// increment -1, -1
 
-    public void assignNums(){
-        for(int x = 0; x < boardWidth; x++){
-            for(int y = 0; y < boardHeight; y++){
-                if(board.get(x).get(y) == -1){
-                    
+                    if (x - 1 >= 0 && board.get(x - 1).get(y) != -1) {
+                        board.get(x - 1).set(y, board.get(x - 1).get(y) + 1);
+                    }// increment -1, 0
+
+                    if (x - 1 >= 0 && y + 1 < boardHeight && board.get(x - 1).get(y + 1) != -1) {
+                        board.get(x - 1).set(y + 1, board.get(x - 1).get(y + 1) + 1);
+                    }// increment -1, +1
+
+                    if (y - 1 >= 0 && board.get(x).get(y - 1) != -1) {
+                        board.get(x).set(y - 1, board.get(x).get(y - 1) + 1);
+                    }// increment 0, -1
+
+                    if (y + 1 < boardHeight && board.get(x).get(y + 1) != -1) {
+                        board.get(x).set(y + 1, board.get(x).get(y + 1) + 1);
+                    }// increment 0, +1
+
+                    if (x + 1 < boardWidth && y - 1 >= 0 && board.get(x + 1).get(y - 1) != -1) {
+                        board.get(x + 1).set(y - 1, board.get(x + 1).get(y - 1) + 1);
+                    }//increment +1, -1
+
+                    if (x + 1 < boardWidth && board.get(x + 1).get(y) != -1) {
+                        board.get(x + 1).set(y, board.get(x + 1).get(y) + 1);
+                    }//increment +1, 0
+
+                    if (x + 1 < boardWidth && y + 1 < boardHeight && board.get(x + 1).get(y + 1) != -1) {
+                        board.get(x + 1).set(y + 1, board.get(x + 1).get(y + 1) + 1);
+                    }//increment +1, +1
                 }
             }
         }
