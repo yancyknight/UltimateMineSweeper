@@ -2,12 +2,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
-    static int boardWidth = 8;
-    static int boardHeight = 4;
-    static int numBombs = 8;
-    static ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
+    private int boardWidth;
+    private int boardHeight;
+    private int numBombs;
+    private static ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
 
     public Board() {
+        this(10,10,10);
+    }
+
+    public Board(int width, int height, int bombs){
+        boardWidth = width;
+        boardHeight = height;
+        numBombs = bombs;
+
         initializeBoard();
         assignBombs(numBombs);
         assignNums();
@@ -15,8 +23,19 @@ public class Board {
 
     public static void main(String[] args) {
         Board b = new Board();
-
         printBoard();
+    }
+
+    public int getBoardHeight(){
+        return boardHeight;
+    }
+
+    public int getBoardWidth(){
+        return boardWidth;
+    }
+
+    public int getNumBombs(){
+        return numBombs;
     }
 
     //initialize board to 0
@@ -53,7 +72,7 @@ public class Board {
                 if(board.get(x).get(y) == -1){
                     for(int xOff = -1; xOff < 2; xOff++) {
                         for (int yOff = -1; yOff < 2; yOff++){
-                            if (x + xOff >= 0 && x + xOff < boardWidth && y + yOff >= 0 && y + yOff < boardHeight && board.get(x + xOff).get(y + yOff) != -1) {                               
+                            if (x + xOff >= 0 && x + xOff < boardWidth && y + yOff >= 0 && y + yOff < boardHeight && board.get(x + xOff).get(y + yOff) != -1) {
                                 board.get(x + xOff).set(y + yOff, board.get(x + xOff).get(y + yOff) + 1);
                             }
                         }
