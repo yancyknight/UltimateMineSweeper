@@ -38,6 +38,13 @@ public class Board {
         return numBombs;
     }
 
+    public int getTile(int x, int y){
+        if(x >= 0 && x < boardWidth && y >= 0 && y < boardHeight) {
+            return board.get(x).get(y);
+        }
+        else return -999;
+    }
+
     //initialize board to 0
     private void initializeBoard() {
         ArrayList<Integer> column = new ArrayList<Integer>();
