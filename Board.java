@@ -73,7 +73,7 @@ public class Board {
         }
     }
 
-    public void assignNums(){
+    private void assignNums(){
         for(int x = 0; x < boardWidth; x++){
             for(int y = 0; y < boardHeight; y++){
                 if(board.get(x).get(y) == -1){
@@ -90,7 +90,7 @@ public class Board {
     }
 
     //print in matrix form
-    public static void printBoard() {
+    private static void printBoard() {
         for (ArrayList<Integer> column : board) {
             for (int e : column) {
                 if(e == -1)
