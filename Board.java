@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
-//comment for test
-
-
 public class Board {
     private int boardWidth;
     private int boardHeight;
