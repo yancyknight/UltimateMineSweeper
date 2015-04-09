@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -100,6 +101,10 @@ public class Board {
             }
             System.out.println();
         }
+    }
+
+    public void print_Board(){
+        printBoard();
     }
 
 }
