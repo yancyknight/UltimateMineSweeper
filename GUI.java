@@ -2,11 +2,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+import java.util.StringTokenizer;
 import javax.swing.*;
 
 public class GUI extends JFrame implements ActionListener{
-    int width, height, numBombs;
+    int boardWidth, boardHeight, numBombs;
     static Board b;
     private ArrayList<ArrayList<JButton>> buttons = new ArrayList<ArrayList<JButton>>();
     Icon bn = new ImageIcon(getClass().getResource("bn.png"));
@@ -21,10 +21,12 @@ public class GUI extends JFrame implements ActionListener{
     Icon b6 = new ImageIcon(getClass().getResource("b6.png"));
     Icon b7 = new ImageIcon(getClass().getResource("b7.png"));
     Icon b8 = new ImageIcon(getClass().getResource("b8.png"));
+    String delims = ",";
 
 
     public static void main(String args[]){
-        GUI gui = new GUI();
+        GUI gui = new GUI(20,20,10);
+        b.print_Board();
         gui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gui.pack();
         gui.setVisible(true);
@@ -35,8 +37,8 @@ public class GUI extends JFrame implements ActionListener{
     }
 
     public GUI(int width, int height, int numBombs){
-        this.width = width;
-        this.height = height;
+        boardWidth = width;
+        boardHeight = height;
         this.numBombs = numBombs;
         b = new Board(width, height, numBombs);
 
@@ -45,13 +47,13 @@ public class GUI extends JFrame implements ActionListener{
 
         ArrayList<JButton> column = new ArrayList<JButton>();
 
-        for(int j = 0; j < width; j++ ){
-            for (int i = 0; i < height; i++) {
+        for(int j = 0; j < boardWidth; j++ ){
+            for (int i = 0; i < boardHeight; i++) {
                 JButton button = new JButton();
                 button.setIcon(bn);
                 int num = b.getTile(j,i);
 
-                button.setActionCommand(Integer.toString(j) + Integer.toString(i) + Integer.toString(num));
+                button.setActionCommand(Integer.toString(j) + delims + Integer.toString(i) + delims + Integer.toString(num));
                 button.setPreferredSize(new Dimension(22,22));
                 button.addActionListener(this);
 
@@ -63,40 +65,40 @@ public class GUI extends JFrame implements ActionListener{
         }
     }
 
-    private void revealTile(int x, int y){
-        buttons.get(x).get(y).doClick();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        String xS = actionCommand.substring(0, 1);
-        String yS = actionCommand.substring(1, 2);
-        String valueS = actionCommand.substring(2);
+        StringTokenizer st = new StringTokenizer(actionCommand, delims);
+        String xS = st.nextToken();
+        String yS = st.nextToken();
+        String valueS = st.nextToken();
 
         int state = Integer.parseInt(valueS);
         int x = Integer.parseInt(xS);
         int y = Integer.parseInt(yS);
 
         switch(state) {
+            case -999:
+                System.out.println("An error has occurred while reading the board.");
+                break;
             case -1:
                 buttons.get(x).get(y).setIcon(bb);
                 JOptionPane.showMessageDialog(null, "You done got dead", "BOOM", JOptionPane.INFORMATION_MESSAGE);
-
                 break;
             case 0:
                 buttons.get(x).get(y).setIcon(b0);
                 if(x - 1 >= 0 && buttons.get(x - 1).get(y).getIcon() == bn) {
-                    revealTile(x - 1, y);
+                    buttons.get(x - 1).get(y).doClick();
                 }
-                if(x + 1 < width && buttons.get(x + 1).get(y).getIcon() == bn) {
-                    revealTile(x + 1, y);
+                if(x + 1 < boardWidth && buttons.get(x + 1).get(y).getIcon() == bn) {
+                    buttons.get(x + 1).get(y).doClick();
                 }
                 if(y - 1 >= 0 && buttons.get(x).get(y - 1).getIcon() == bn) {
-                    revealTile(x, y - 1);
+                    buttons.get(x).get(y - 1).doClick();
+
                 }
-                if(y + 1 < height && buttons.get(x).get(y + 1).getIcon() == bn) {
-                    revealTile(x, y + 1);
+                if(y + 1 < boardHeight && buttons.get(x).get(y + 1).getIcon() == bn) {
+                    buttons.get(x).get(y + 1).doClick();
                 }
                 break;
             case 1:
