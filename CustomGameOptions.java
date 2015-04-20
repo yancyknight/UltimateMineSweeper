@@ -3,64 +3,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
-public class menuBars implements ActionListener{
-
-    JMenuBar menuBar;
-    JFrame frame;
-    JMenu newGame;
-
-    JMenuItem customGame;
-    JMenuItem randomGame;
-
-    menuBars(){
-
-        JFrame frame = new JFrame();
-        frame.setTitle("TITLE GOES HERE YO");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        menuBar = new JMenuBar();
-        newGame = new JMenu("Start a new...");
-        customGame = new JMenuItem("Custom Game");
-        randomGame = new JMenuItem("Random Game");
-
-        //Add action listeners
-        customGame.addActionListener(this);
-        randomGame.addActionListener(this);
-
-        newGame.add(customGame);
-        newGame.add(randomGame);
-
-        menuBar.add(newGame);
-        frame.setJMenuBar(menuBar);
-
-
-        frame.setSize(500,500);
-        frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-
-        menuBars mb = new menuBars();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource() == customGame){
-            System.out.println("custon game");
-            customGameOptions cg = new customGameOptions();
-        }
-
-        else if (e.getSource() == randomGame){
-            System.out.println("Random Game");
-        }
-    }
-}
-
-class customGameOptions extends JFrame implements ActionListener{
+class CustomGameOptions extends JDialog{
     private JLabel num_bombsL, grid_sizeL, fill;
     private JTextField num_bombsTF, grid_sizeTF;
     private JButton startB, cancelB;
@@ -70,16 +17,16 @@ class customGameOptions extends JFrame implements ActionListener{
 
     private startButtonHandler sbHandler;
     private cancelButtonHandler cbHandler;
+    private Driver driver;
 
-    menuBars mb;
+    public CustomGameOptions(Driver inputDriver){
 
-    public customGameOptions(){
-
-        setTitle("Custom Game Options");
+        setTitle("Minesweeper Settings");
+        driver = inputDriver;
         setSize(WIDTH, HEIGHT);
 
         num_bombsL = new JLabel("Enter the number\n of bombs desired: ");
-        grid_sizeL = new JLabel ("Please enter the grid\n size (must be greater than 'n': ");
+        grid_sizeL = new JLabel ("Please enter the grid\n size (must be between 10 and 35): ");
         fill = new JLabel(" ");
 
         num_bombsTF = new JTextField(3);
@@ -133,28 +80,41 @@ class customGameOptions extends JFrame implements ActionListener{
         pane.add(cancelB);
 
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private class startButtonHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
+            int size = -1;
+            int num = -1;
 
-            System.out.println("You just started a custom game!");
+            while(size < 0 || num < 0) {
+                //try {
+                size = Integer.parseInt(grid_sizeTF.getText());
+                num = Integer.parseInt(num_bombsTF.getText());
+                if(size < 10)
+                {
+                    size = 10;
+                }
+                if(size > 35)
+                {
+                    size = 35;
+                }
+                /*} catch (NumberFormatException n) {
+                    JOptionPane.showMessageDialog(null, "Type a number in both fields.");
+
+                }*/
+            }
+            driver.makeGame(size, size, num);
+            setVisible(false);
+            dispose();
         }
     }
 
     private class cancelButtonHandler implements ActionListener{
         public void actionPerformed(ActionEvent e){
-
-            System.out.println("You just canceled brah!");
             setVisible(false);
+            dispose();
         }
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
     }
 }

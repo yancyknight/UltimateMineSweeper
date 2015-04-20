@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -6,7 +5,7 @@ public class Board {
     private int boardWidth;
     private int boardHeight;
     private int numBombs;
-    private static ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
+    public ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
 
     public Board() {
         this(10,10,10);
@@ -20,11 +19,6 @@ public class Board {
         initializeBoard();
         assignBombs(numBombs);
         assignNums();
-    }
-
-    public static void main(String[] args) {
-        Board b = new Board();
-        printBoard();
     }
 
     public int getBoardHeight(){
@@ -91,7 +85,7 @@ public class Board {
     }
 
     //print in matrix form
-    private static void printBoard() {
+    public void printBoard() {
         for (ArrayList<Integer> column : board) {
             for (int e : column) {
                 if(e == -1)
