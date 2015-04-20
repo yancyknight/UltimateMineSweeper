@@ -12,7 +12,7 @@ class CustomGameOptions extends JDialog{
     private JTextField num_bombsTF, grid_sizeTF;
     private JButton startB, cancelB;
 
-    private static final int WIDTH = 400;
+    private static final int WIDTH = 500;
     private static final int HEIGHT = 400;
 
     private startButtonHandler sbHandler;
