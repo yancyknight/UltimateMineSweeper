@@ -1,5 +1,3 @@
-package CS2410;
-
 import javax.swing.*;
 
 public class Driver {
@@ -22,7 +20,3 @@ public class Driver {
         gui.setVisible(true);
     }
 }
-
-//TODO: figure out maze timer?, make an Options menu item instead of current setup, maybe have that have a reveal option
-
-
