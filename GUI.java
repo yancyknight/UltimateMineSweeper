@@ -1,12 +1,10 @@
+package CS2410;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-
 import javax.swing.*;
-
-
 
 public class GUI extends JFrame implements ActionListener{
     GridPanel pane;
@@ -17,33 +15,12 @@ public class GUI extends JFrame implements ActionListener{
 
     JMenuItem customGame;
     JMenuItem randomGame;
-    
-  //NEW
-    JToolBar toolbar;
 
     boolean mazeIsDone;
     boolean mazeIsDefused;
     boolean isDead;
-    
-    //new
-    boolean canWin;
-    int currentState;
-    int flagCounter;
-    int badFlagCounter;
-    
-    
-  //NEW
-    static final int FLAG = 1;
-    static final int REVEAL = 2;
 
     public GUI(int width, int height, int numBombs, Driver inputDriver){
-    	//NEW
-    	currentState = REVEAL;
-    	canWin = true;
-    	flagCounter = 0;
-    	badFlagCounter = 0;
-    	
-
         driver = inputDriver;
         pane = new GridPanel(width, height, numBombs, this);
 
@@ -52,23 +29,7 @@ public class GUI extends JFrame implements ActionListener{
         this.add(pane);
 
         menuBar = new JMenuBar();
-        newGame = new JMenu("Start a new...");
-        
-      //NEW START
-        flagAction action = new flagAction();
-        
-        toolbar = new JToolBar();
-		JButton button = new JButton("Flag");
-		button.addActionListener(action);
-		toolbar.add(button);
-		
-		button = new JButton("Reveal");
-		button.addActionListener(action);
-		toolbar.add(button);
-        
-		add(toolbar, BorderLayout.PAGE_START);
-		//NEW END
-		
+        newGame = new JMenu("New Game...");
         customGame = new JMenuItem("Custom Game");
         randomGame = new JMenuItem("Random Game");
 
@@ -80,51 +41,38 @@ public class GUI extends JFrame implements ActionListener{
         newGame.add(randomGame);
 
         menuBar.add(newGame);
+
+        //centers frame in screen
+        this.setSize(width*22, height*22);
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         this.setResizable(false);
         this.setTitle("Minesweeper");
         this.setJMenuBar(menuBar);
     }
-    //NEW START
-    public void unFlag(int state){
-    	if(state == -1)
-    		flagCounter--;
-    	else 
-    		badFlagCounter--;
-    }
-    
-    public void flag(int state){
-    	if(state == -1)	
-    		flagCounter++;
-    	else
-    		badFlagCounter++;
-    }
-    
-    public void win(){
-    	JOptionPane.showMessageDialog(null, "You win! You can now leave the 90s.");
-    }
-    //NEW END
+
     public void checkDone(){
         if(mazeIsDefused)
         {
-            JOptionPane.showMessageDialog(null, "You defused it! Phew.");
+            JOptionPane.showMessageDialog(null, "You defused it! Phew.", "Beep!", JOptionPane.INFORMATION_MESSAGE);
             pane.mazeCount++;
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "BOOM! You are very dead.");
-            //TODO: have some sort of reveal function here
+            JOptionPane.showMessageDialog(null, "You are very dead.", "BOOM!", JOptionPane.WARNING_MESSAGE);
+            pane.reveal();
             isDead = true;
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	
-    	if (e.getSource() == customGame){
+        //listeners for new game drop down menu
+        if (e.getSource() == customGame){
             System.out.println("custom game");
             JDialog cg = new CustomGameOptions(driver);
         }
-
         else if (e.getSource() == randomGame){
             Random numGenerator = new Random();
             int randSize = 0;
@@ -135,29 +83,12 @@ public class GUI extends JFrame implements ActionListener{
             while(randBombs >= randSize*randSize || randBombs < 1){
                 randBombs = numGenerator.nextInt(20);
             }
+
+            //starts new game based on these settings
             driver.makeGame(randSize, randSize, randBombs);
         }
     }
-    
-  //NEW START
-    private class flagAction implements ActionListener{
-
-    	@Override
-    	public void actionPerformed(ActionEvent e) {
-    		
-        	if(((JButton) e.getSource()).getText() == "Flag") {
-    			currentState = FLAG;
-        	}
-        	else if (((JButton) e.getSource()).getText() == "Reveal") {
-    			currentState = REVEAL;
-        	}
-    	}
-    	
-    }
-  //NEW END
 }
-
-
 
 /*
 one frame, add panels to frame.

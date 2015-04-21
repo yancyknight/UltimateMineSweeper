@@ -1,3 +1,5 @@
+package CS2410;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -6,10 +8,6 @@ public class Board {
     private int boardHeight;
     private int numBombs;
     public ArrayList<ArrayList<Integer>> board = new ArrayList<ArrayList<Integer>>();
-
-    public Board() {
-        this(10,10,10);
-    }
 
     public Board(int width, int height, int bombs){
         boardWidth = width;
@@ -33,6 +31,7 @@ public class Board {
         return numBombs;
     }
 
+    //returns the int stored on a given space
     public int getTile(int x, int y){
         if(x >= 0 && x < boardWidth && y >= 0 && y < boardHeight) {
             return board.get(x).get(y);
@@ -68,6 +67,7 @@ public class Board {
         }
     }
 
+    //places an int in each space to reflect number of adjacent bombs
     private void assignNums(){
         for(int x = 0; x < boardWidth; x++){
             for(int y = 0; y < boardHeight; y++){
@@ -95,10 +95,6 @@ public class Board {
             }
             System.out.println();
         }
-    }
-
-    public void print_Board(){
-        printBoard();
     }
 
 }

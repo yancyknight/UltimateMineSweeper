@@ -1,3 +1,5 @@
+package CS2410;
+
 import javax.swing.*;
 
 public class Driver {
@@ -14,7 +16,7 @@ public class Driver {
             gui.dispose();
         }
         gui = new GUI(x,y,num, this);
-        gui.pane.b.print_Board();
+        gui.pane.b.printBoard();
         gui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gui.pack();
         gui.setVisible(true);
@@ -22,4 +24,5 @@ public class Driver {
 }
 
 //TODO: figure out maze timer?, make an Options menu item instead of current setup, maybe have that have a reveal option
+
 

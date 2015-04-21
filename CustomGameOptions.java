@@ -1,10 +1,7 @@
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.*;
-import java.util.concurrent.TimeUnit;
+package CS2410;
 
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 class CustomGameOptions extends JDialog{
@@ -79,6 +76,9 @@ class CustomGameOptions extends JDialog{
         pane.add(startB);
         pane.add(cancelB);
 
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         setVisible(true);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
@@ -88,23 +88,30 @@ class CustomGameOptions extends JDialog{
             int size = -1;
             int num = -1;
 
+            //input validation
             while(size < 0 || num < 0) {
-                //try {
                 size = Integer.parseInt(grid_sizeTF.getText());
                 num = Integer.parseInt(num_bombsTF.getText());
                 if(size < 10)
                 {
                     size = 10;
+                    JOptionPane.showMessageDialog(null, "Size too small. Defaulting to 10.");
                 }
-                if(size > 35)
+                else if(size > 35)
                 {
                     size = 35;
+                    JOptionPane.showMessageDialog(null, "Size too large. Defaulting to 35.");
                 }
-                /*} catch (NumberFormatException n) {
-                    JOptionPane.showMessageDialog(null, "Type a number in both fields.");
-
-                }*/
+                if(num > size*size){
+                    num = 20;
+                    JOptionPane.showMessageDialog(null, "Too many bombs. Defaulting to 20.");
+                }
+                else if(num < 1) {
+                    num = 20;
+                    JOptionPane.showMessageDialog(null, "Too few bombs. Defaulting to 20.");
+                }
             }
+            //makes game based on these settings
             driver.makeGame(size, size, num);
             setVisible(false);
             dispose();
