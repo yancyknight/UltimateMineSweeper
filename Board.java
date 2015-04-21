@@ -1,5 +1,3 @@
-package CS2410;
-
 import java.util.ArrayList;
 import java.util.Random;
 
